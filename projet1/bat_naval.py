@@ -147,15 +147,28 @@ def trouve_bonne_grille():
     return cpt
 
 #denombre_placer_3_bateaux()
-###------------------------------#### Main:
     
 def main():
-    grilleRandom= genere_grille()
-    grilleRandom.affiche()
-    battle = Bataille(grilleRandom)
-    player = RandomPlayer(battle)
-    compteur = player.joueCoup()
-    print("total de coups joués par randomplayer :",compteur)
+    nbParties=10000    
+    totalRandom=0
+    for i in range (nbParties):
+        
+        grilleRandom= genere_grille()
+        battle = Bataille(grilleRandom)
+        player = RandomPlayer(battle)
+        compteur = player.joueCoup()
+        totalRandom+= compteur
+    print("total de coups joués par randomplayer :",round(totalRandom/nbParties))
+    
+    totalHeure=0
+    for i in range (nbParties):
+        
+        grilleRandom= genere_grille()
+        battle = Bataille(grilleRandom)
+        player = HeuresticPlayer(battle)
+        compteur = player.joueCoup()
+        totalHeure+= compteur
+    print("total de coups joués par heuristiclayer :",round(totalHeure/nbParties))
     
 if __name__ == '__main__':
     main()

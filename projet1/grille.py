@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 class grille():
     def __init__(self):
         self.tab = np.zeros([10,10])
+        self.list_bat = []
         
     def eq(self ,grilleB):
         return (np.array_equal(self.tab, grilleB.tab))
@@ -54,19 +55,23 @@ class grille():
         taille = bateau.getTaille()
         i = position[0]
         j = position[1]
-        
+        list_coord = []
+        self.list_bat.append(bateau)
         if direction == 1:
             while taille > 0:
+                list_coord.append((i,j))
                 self.tab[i][j] += bateau.type_bat
                 taille -= 1
                 j += 1
                 
         else :
             while taille > 0:
+                list_coord.append((i,j))
                 self.tab[i][j] += bateau.type_bat
                 taille -= 1
                 i += 1
-            
+        
+        bateau.placer(list_coord, len(self.list_bat) -1) 
         return True
     
     def vider(self):

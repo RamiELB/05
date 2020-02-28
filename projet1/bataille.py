@@ -2,7 +2,7 @@
 
 class Bataille ():
     def __init__(self , grilleAlea):
-        self.grilleAlea=grilleAlea
+        self.grilleAlea = grilleAlea
     
     
     def joue(self,position): 
@@ -11,7 +11,7 @@ class Bataille ():
         """
         i,j = position
         if self.grilleAlea.tab[i][j] > 0 :
-            self.grilleAlea.tab[i][j] = 0 # On a coulé la case
+            self.grilleAlea.tab[i][j] = -1 # On a touché la case
             return True
         # rien touché
         return False
@@ -28,4 +28,4 @@ class Bataille ():
             else:
                 return False
         return True
-    #def reset (self):
+    

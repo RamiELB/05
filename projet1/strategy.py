@@ -12,7 +12,7 @@ class RandomPlayer(Strategy):
     """Strat aléatoire: On commence avec 1 grille alea et chaque tour on joue un coup random
     """
     def __init__(self, bataille , total = 17):
-        super(RandomPlayer,self).__init__(total)
+        super(RandomPlayer, self).__init__(total)
         self.bataille = bataille #bataille contient grille aleatoire et fcts ...
         
     def joueCoup(self):
@@ -32,11 +32,10 @@ class RandomPlayer(Strategy):
                 self.miss.append(coord_a_Jouer)
                 
             #Affichage de l'état de la grille
-            if(uselessCPT%5==0):
-                self.bataille.grilleAlea.affiche()
+            #if(uselessCPT%5==0):
+                #self.bataille.grilleAlea.affiche()
             uselessCPT+=1
-        print("Hits",len(self.hits))
-        print("Misses",len(self.miss))
+        #self.bataille.grilleAlea.affiche()
         
         #Return la somme des miss et hits
         return len(self.hits) + len(self.miss)
@@ -49,10 +48,29 @@ class HeuresticPlayer(Strategy):
     
     
     def __init__(self, bataille , total = 17):
-        super(HeuresticPlayer,self).__init__(total)
+        super(HeuresticPlayer, self).__init__(total)
         self.bataille = bataille
 
     def joueCoup(self):
+        coupsPossibles=coupsPossiblesGrille() ## LISTE DES COUPS
+        NvxCoups = []
+        #print("ici")
+        while (len(self.hits) < self.total):
+            #print("ici2")
+            try : 
+                coord_a_Jouer = NvxCoups.pop()
+            except:
+                coord_a_Jouer = random.choice(coupsPossibles)
+            coupsPossibles.remove(coord_a_Jouer) # enleve ce coup de la liste
+            
+            if (self.bataille.joue(coord_a_Jouer)) == True :
+                self.hits.append(coord_a_Jouer)
+                NvxCoups = casesConnexes(self.bataille.grilleAlea, coord_a_Jouer)
+                NvxCoups = [i for i in NvxCoups if i in coupsPossibles]
+
+            else:
+                self.miss.append(coord_a_Jouer)                                          
+                
         return len(self.hits)+len(self.miss)
 
 def coupsPossiblesGrille():
@@ -63,3 +81,14 @@ def coupsPossiblesGrille():
             for j in range (10):
                 coupsPossibles.append( (i,j) )
     return coupsPossibles
+
+def casesConnexes(grille, position):
+    taille = len(grille.tab)
+    i,j = position
+    list_coord_i = [i-1,i+1]
+    list_coord_j = [j-1,j+1]
+    [list_coord_i.remove(i) for i in list_coord_i if i>taille-1 or i < 0]
+    [list_coord_j.remove(j) for j in list_coord_j if j>taille-1 or j < 0]
+    return [(i2,j) for i2 in list_coord_i] + [(i,j2) for j2 in list_coord_j]
+
+    
