@@ -3,6 +3,8 @@
 class Bataille ():
     def __init__(self , grilleAlea):
         self.grilleAlea = grilleAlea
+        self.totalHp = grilleAlea.getTotalHp()
+        self.hpNow = self.totalHp
     
     
     def joue(self,position): 
@@ -12,6 +14,9 @@ class Bataille ():
         i,j = position
         if self.grilleAlea.tab[i][j] > 0 :
             self.grilleAlea.tab[i][j] = -1 # On a touché la case
+            self.hpNow -= 1
+            b = self.trouve_bateau(position)
+            b.toucher(position)
             return True
         # rien touché
         return False
@@ -21,11 +26,13 @@ class Bataille ():
         """
         Rend true si tt les bateaux sont coulés, false s'il en reste des bateaux a detruire
         """
-        ListeCoordBateau= self.grilleAlea.trouver_coord()
-        for (i,j) in ListeCoordBateau :
-            if self.grilleAlea(i,j) == 0:
-                continue
-            else:
-                return False
-        return True
-    
+        if self.hpNow == 0:
+            return True
+        return False
+
+    def trouve_bateau(self, position):
+        for b in self.grilleAlea.list_bat:
+            for c in b.coord:
+                if c == position:
+                    return b
+        raise EOFError

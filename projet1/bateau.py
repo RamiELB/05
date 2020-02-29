@@ -11,8 +11,9 @@ class bateau():
         self.coord = coord # liste des cases du bateaux
         self.index = index # index du bateau dans la liste de la grille
         
-    def toucher(self):
+    def toucher(self, position):
         self.hp -= 1
+        self.coord.remove(position)
             
-    def is_dead(self):
+    def isDead(self):
         return self.hp == 0

@@ -1,19 +1,19 @@
 import random
 
-class Strategy():
+class Strategy(object):
     """Class strategy qui represente la strategie pr gagner en trouvant les 17cases des bateaus
     """
-    def __init__(self, total = 17):
+    def __init__(self, bataille):
         self.miss = []
         self.hits = []
-        self.total = total
+        self.total = bataille.totalHp
+        self.bataille = bataille
 
 class RandomPlayer(Strategy):
     """Strat aléatoire: On commence avec 1 grille alea et chaque tour on joue un coup random
     """
-    def __init__(self, bataille , total = 17):
-        super(RandomPlayer, self).__init__(total)
-        self.bataille = bataille #bataille contient grille aleatoire et fcts ...
+    def __init__(self, bataille):
+        super().__init__(bataille)
         
     def joueCoup(self):
         """Joue un coup et retourne le nombre de coups ratés + coups reussis pr obtenir la victoire
@@ -47,9 +47,8 @@ class HeuresticPlayer(Strategy):
     """
     
     
-    def __init__(self, bataille , total = 17):
-        super(HeuresticPlayer, self).__init__(total)
-        self.bataille = bataille
+    def __init__(self, bataille):
+        super().__init__(bataille)
 
     def joueCoup(self):
         coupsPossibles=coupsPossiblesGrille() ## LISTE DES COUPS

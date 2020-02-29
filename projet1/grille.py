@@ -119,3 +119,9 @@ class grille():
                 self.tab[i][j] = 0
                 taille -= 1
                 i += 1
+
+    def getTotalHp(self):
+        cpt = 0
+        for b in self.list_bat :
+            cpt += b.hp
+        return cpt

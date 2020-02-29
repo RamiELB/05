@@ -7,8 +7,6 @@ from bataille import *
 from strategy import *
 
     
-    
-
 def genere_grille():
     g = grille()
     list_bat = []
@@ -124,7 +122,7 @@ def test():
                     for m in list_bat:
                         print("Taille des bateaux : {} et {} et {} et {} et {}, façon de le placer : {}".format(i.getTaille(), j.getTaille(), k.getTaille(), l.getTaille(), m.getTaille(), prob_4_place * denombre_places_bateau(g2, m)))
                         
-                        
+    """                    
 def trouve_bonne_grille():
     g1 = genere_grille()
     cpt = 1
@@ -133,7 +131,7 @@ def trouve_bonne_grille():
         g2 = genere_grille()
         cpt = cpt +1
         print(cpt)
-    return cpt
+    return cpt"""
 
 def trouve_bonne_grille():
     g1 = genere_grille()
@@ -151,8 +149,7 @@ def trouve_bonne_grille():
 def main():
     nbParties=10000    
     totalRandom=0
-    for i in range (nbParties):
-        
+    for i in range (nbParties):    
         grilleRandom= genere_grille()
         battle = Bataille(grilleRandom)
         player = RandomPlayer(battle)
@@ -161,8 +158,7 @@ def main():
     print("total de coups joués par randomplayer :",round(totalRandom/nbParties))
     
     totalHeure=0
-    for i in range (nbParties):
-        
+    for i in range (nbParties):   
         grilleRandom= genere_grille()
         battle = Bataille(grilleRandom)
         player = HeuresticPlayer(battle)
